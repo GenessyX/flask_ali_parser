@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title%} Reviews Page {% endblock %}
+
+{% block content %}
+
+<div class="product">
+    {{ product.keys() }}
+    <a href="{{ product.link }}">
+        <h2>
+            {% if product.title %}
+                {{ product.title }}
+            {% else %}
+                {{ product.id }}
+            {% endif %}
+        </h2>
+    </a>
+    {% if product.descr %}
+        <p>{{ product.descr }}</p>
+    {% endif %}
+    {% if product.preview_img %}
+        <img src="{{product.preview_img}}" alt="{{product.title}} preview_image">
+    {% endif %}
+    {% if product.reviews_count %}
+        <p>Reviews count: {{ product.reviews_count }}</p>
+    {% endif %}
+</div>
+
+<div id="modal">
+    <div class="control-buttons">
+        <button class="delete" id="delete">&times;</button>
+        <button id="prev">
+            &lt;
+        </button>
+        <button id="next">
+            &gt;
+        </button>
+
+    </div>
+</div>
+<div id="reviews">
+    {% for review in reviews%}
+    <div class="review" id="{{ review.id }}">
+    
+        {% if review.author_id != 0 %}
+            <a href="{{url_for('ali_parser.user_page', author_id=review.author_id)}}">
+                <h2>
+                    {{ review.author_username }}
+                </h2>
+            </a>
+        {% endif %}
+        
+        <p>
+            {{review.body}}
+        </p>
+        <div class="images">
+            {% for img in review.gallery%}
+                <img class="image" src="{{img.link}}" alt=""> 
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% block footer %}
+    <script src="{{ url_for('static', filename='pic_viewer.js') }}"></script>
+{% endblock %}
+
+{% endblock %}

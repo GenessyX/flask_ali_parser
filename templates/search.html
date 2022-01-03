@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title%} Search Page {% endblock %}
+
+{% block content%}
+<div id="search-bar">
+    <form onsubmit="window.location = 'http://127.0.0.1:5000/search/' + search.value; return false;">
+        <input id="search" type="text">
+        <button type="submit">Search</button>
+    </form>
+</div>
+{% if products %}
+<div id="products">
+    {% for product in products %}
+    <a data-id="{{product.id}}" class="product" href="{{url_for('ali_parser.product_page', id=product.id)}}">
+        <h2 class="title">{{product.title | truncate(100, True)}}</h2>
+        <p>Review count: {{product.reviews_count}}</p>
+        <img src="{{product.preview_img}}" alt="{{ product.id }} - product image">
+    </a>
+    {% endfor%}
+</div>
+{% endif %}
+{% endblock %}

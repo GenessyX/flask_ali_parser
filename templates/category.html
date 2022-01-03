@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title%} Categories Page {% endblock %}
+
+{% block content%}
+<div id="products">
+    {% for product in products %}
+        <a data-id="{{product.id}}" class="product" href="{{url_for('reviews_parse', id=product.id)}}">
+            <h2>{{product.productTitle}}</h2>
+            <p>Review count: {{product.reviewCount}}</p>
+            <img src="{{product.imgSrc}}" alt="">
+        </a>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Index page
+{% endblock %}
+
+{% block content %}
+    Index Page
+    <div class="">
+        
+    </div>
+    <a href="{{ url_for('ali_parser.product_page', id=0) }}">
+        Id page
+    </a>
+
+    <h2>
+        Top users:
+    </h2>
+    <div id="users">
+        {% for user in users %}
+        <div class="user">
+            <a href="{{ url_for('ali_parser.user_page', author_id=user.id) }}">{{ user.username }}: {{ user.review_count }}</a>
+        </div>
+    {% endfor %}
+    </div>
+    
+    <h2>
+        Top products:
+    </h2>
+    <div id="products">
+        
+        {% for product in products %}
+        <div class="product">
+            <a href="{{ url_for('ali_parser.product_page', id=product.id) }}">
+                <div class="title">
+                    {% if product.title %}
+                        {{ product.title|truncate(35) }}
+                    {% else %}
+                        {{ product.id }}            
+                    {% endif %}
+                </div>
+                {% if product.preview_img %}
+                    <img src="{{product.preview_img}}" alt="">
+                {% endif %}
+            </a>
+        </div>
+    {% endfor %}
+    </div>
+    
+{% endblock %}
